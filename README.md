@@ -1,3 +1,7 @@
+# mirrorz-org
+
+[Documentation](./docs/)
+
 ## org part of mirrorz-org
 
 The main content is at <https://github.com/mirrorz-org/org/wiki>
