@@ -55,3 +55,15 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 目前有两个实例运行此服务：<https://mirrors.cernet.edu.cn>（推荐）和 <https://mirrors.mirrorz.org/>
 
 提供这个文件表明镜像站点知悉可能会有来自 mirrorz 的流量被重定向到它们。
+
+#### 提供 mirrorz.d 信息
+
+镜像站点可以选择以下三种方式中的一种：
+
+* 在已有的 mirrorz.json 中添加 mirrorz.d 信息
+* 在 [mirrorz-d-extension/custom/static/](https://github.com/mirrorz-org/mirrorz-d-extension/tree/master/custom/static) 中添加静态的、包含 mirrorz.d 信息的 JSON 文件
+* 在 [mirrorz-d-extension/custom](https://github.com/mirrorz-org/mirrorz-d-extension/tree/master/custom) 中添加动态的解析器（这一般适用于镜像站点独立于 `mirrorz.json`，单独提供了 mirrorz.d 信息的场合）
+
+如果选择后两种方式，还需要在 [mirrorz-d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-d-extension/blob/master/custom/index.js) 添加对应的内容。
+
+最后修改 [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/)。如果使用第一种方式，需要在 `d_mirrors` 字段中添加 JSON URL；如果使用后两种方式，需要在 `d_parsers` 字段中添加解析器。

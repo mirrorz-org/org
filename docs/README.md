@@ -55,3 +55,15 @@ This enables the user to use redirection provided by mirrorz. Namely when they a
 Currently there are two instances running this service: <https://mirrors.cernet.edu.cn> (Recommended) and <https://mirrors.mirrorz.org/>
 
 By providing this file, mirror site is aware of potential traffic being redirected to them.
+
+#### Providing mirrorz.d Information
+
+Mirror sites have the option to choose one of the following three methods:
+
+* Add mirrorz.d information to the existing mirrorz.json
+* Add a static JSON file containing mirrorz.d information in [mirrorz-d-extension/custom/static/](https://github.com/mirrorz-org/mirrorz-d-extension/tree/master/custom/static)
+* Add a dynamic parser in [mirrorz-d-extension/custom](https://github.com/mirrorz-org/mirrorz-d-extension/tree/master/custom) (This is generally suitable for mirror sites that provide mirrorz.d information independently of `mirrorz.json`)
+
+If you opt for the latter two methods, you will also need to add the corresponding entry in [mirrorz-d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-d-extension/blob/master/custom/index.js).
+
+Finally, modify [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/). If using the first method, add the JSON URL in the d_mirrors field; if using the latter two methods, add the parser in the d_parsers field.
