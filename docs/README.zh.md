@@ -67,3 +67,7 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 如果选择后两种方式，还需要在 [mirrorz-d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-d-extension/blob/master/custom/index.js) 添加对应的内容。
 
 最后修改 [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/)。如果使用第一种方式，需要在 `d_mirrors` 字段中添加 JSON URL；如果使用后两种方式，需要在 `d_parsers` 字段中添加解析器。
+
+## 给开发者
+
+[仓库架构](./repo-struct.zh.md)

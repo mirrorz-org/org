@@ -67,3 +67,7 @@ Mirror sites have the option to choose one of the following three methods:
 If you opt for the latter two methods, you will also need to add the corresponding entry in [mirrorz-d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-d-extension/blob/master/custom/index.js).
 
 Finally, modify [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/). If using the first method, add the JSON URL in the d_mirrors field; if using the latter two methods, add the parser in the d_parsers field.
+
+## For developers
+
+[Repository Architecture](./repo-struct.md)
