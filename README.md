@@ -4,8 +4,6 @@
 
 ## org part of mirrorz-org
 
-The main content is at <https://github.com/mirrorz-org/org/wiki>
-
 This repo clarify the design principles of mirrorz.
 
 This repo is intended for all related party to discuss non-technical issues.
