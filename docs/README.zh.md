@@ -68,6 +68,13 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 
 最后修改 [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/)。如果使用第一种方式，需要在 `d_mirrors` 字段中添加 JSON URL；如果使用后两种方式，需要在 `d_parsers` 字段中添加解析器。
 
+全部完成之后，可以访问 <https://mirrors.cernet.edu.cn/api/scoring> 确认自己的站点在其中。
+
+```shell
+# 例子：如果 filter 限制了 IPv4，那么确认时也需要使用 IPv4 访问
+curl -4 https://mirrors.cernet.edu.cn/api/scoring | jq .
+```
+
 ## 给开发者
 
 [仓库架构](./repo-struct.zh.md)

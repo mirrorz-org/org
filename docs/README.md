@@ -66,7 +66,14 @@ Mirror sites have the option to choose one of the following three methods:
 
 If you opt for the latter two methods, you will also need to add the corresponding entry in [mirrorz-d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-d-extension/blob/master/custom/index.js).
 
-Finally, modify [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/). If using the first method, add the JSON URL in the d_mirrors field; if using the latter two methods, add the parser in the d_parsers field.
+Finally, modify [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/). If using the first method, add the JSON URL in the `d_mirrors` field; if using the latter two methods, add the parser in the `d_parsers` field.
+
+After everything is done, check <https://mirrors.cernet.edu.cn/api/scoring> and you would see your site is listed:
+
+```shell
+# example: You need to access with IPv4 if your endpoint filter limits IPv4 only
+curl -4 https://mirrors.cernet.edu.cn/api/scoring | jq .
+```
 
 ## For developers
 
