@@ -11,10 +11,8 @@ This document introduces the repositories used by the MirrorZ project and their 
   - src
     - parser                               --> mirrorz-parser
     - config                               --> mirrorz-config
-    - i18n                                 --> mirrorz-i18n
-  - scripts
-    - oh-my-mirrorz                        --> oh-my-mirrorz
-  - legacy                                 --> mirrorz-legacy
+    - i18n
+  - legacy
 - mirrorz-302 (redirect service)
   - * Configuration needs to fill in the path of the dist directory in the mirrorz-d-extension repository
 - mirrorz-d-extension (handles data merged from mirrorz.d and mirrorz.json)
@@ -29,8 +27,5 @@ This document introduces the repositories used by the MirrorZ project and their 
   - parser                                 --> mirrorz-parser
 - mirrorz-parser (fetches data from mirror sites and converts it into mirrorz.json)
   - config.json                            --> mirrorz-config/config.json
-- mirrorz-i18n (internationalization)
-- oh-my-mirrorz (speed test script)
-- mirrorz-legacy (site for non-modern browsers)
 - mirrorz-config (configuration for mirrorz sites)
 ```

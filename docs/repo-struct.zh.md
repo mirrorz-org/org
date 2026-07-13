@@ -11,10 +11,8 @@
   - src
     - parser                               --> mirrorz-parser
     - config                               --> mirrorz-config
-    - i18n                                 --> mirrorz-i18n
-  - scripts
-    - oh-my-mirrorz                        --> oh-my-mirrorz
-  - legacy                                 --> mirrorz-legacy
+    - i18n
+  - legacy
 - mirrorz-302（跳转服务）
   - * 配置需要填写 mirrorz-d-extension 仓库中 dist 目录的路径
 - mirrorz-d-extension（处理 mirrorz.d 与 mirrorz.json 融合后的数据）
@@ -29,8 +27,5 @@
   - parser                                 --> mirrorz-parser
 - mirrorz-parser（从镜像站点获取数据并转换为 mirrorz.json）
   - config.json                            --> mirrorz-config/config.json
-- mirrorz-i18n（国际化）
-- oh-my-mirrorz（测速脚本）
-- mirrorz-legacy（非现代浏览器站点）
 - mirrorz-config（mirrorz 站点配置）
 ```
