@@ -44,23 +44,21 @@ Once a parser is provided in `mirrorz-config/parser`:
 * To enable static frontend, add the parser in [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config). MirrorZ would periodically generate a mirrorz.json.
 * To enable monitor, add the parser in [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config)
 
-### mirrorz.d.json
+### 302 Redirect Configuration
 
-This is an extension to mirrorz.json. It is defined at <https://github.com/mirrorz-org/mirrorz-302#mirrorzdjson> and hosted at <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension>.
+The site and endpoint configuration for the redirect service is defined at <https://github.com/mirrorz-org/mirrorz-302#site-configuration> and hosted at <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites>. Repository lists, paths, status, and freshness are written to InfluxDB by mirrorz-monitor and are not duplicated in this static configuration.
 
 This enables the user to use redirection provided by mirrorz. Namely when they are substituting sources, they can just use the domain name of mirrorz.
 
 Currently <https://mirrors.cernet.edu.cn> provides redirecting service to CERNET mirrors.
 
-By providing this file, mirror site is aware of potential traffic being redirected to them.
+Joining this configuration indicates that the mirror site is aware of potential traffic being redirected to it.
 
-#### Providing mirrorz.d Information
+#### Providing 302 Site Information
 
-Mirror sites shall add a static JSON file containing mirrorz.d information in [mirrorz-config/d-extension/custom/static/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/custom/static).
+Mirror sites shall add a static JSON file containing `abbrs` and `endpoints` in [mirrorz-config/d-extension/sites/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites). Every value in `abbrs` must exactly match the `mirror` identifier written by mirrorz-monitor; multiple monitored site identifiers may share one endpoint configuration.
 
-You will also need to add the corresponding entry in [mirrorz-config/d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/custom/index.js).
-
-Finally, modify [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/). Add the parser in the `d_parsers` field.
+The mirror site must also be added to mirrorz-monitor as described above. The 302 service combines repository paths from monitor data with the configured endpoints, so no separate generation script or `d_parser` entry is needed.
 
 After everything is done, check <https://mirrors.cernet.edu.cn/api/scoring> and you would see your site is listed:
 

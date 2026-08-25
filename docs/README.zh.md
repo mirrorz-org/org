@@ -44,21 +44,21 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 * 要启用静态前端，在 [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser。MirrorZ 会定期生成一个 mirrorz.json。
 * 要启用监控，在 [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser
 
-### mirrorz.d.json
+### 302 跳转配置
 
-这是对 mirrorz.json 的扩展。其定义在 <https://github.com/mirrorz-org/mirrorz-302#mirrorzdjson>，托管在 <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension>。
+跳转服务的站点与 endpoint 配置定义在 <https://github.com/mirrorz-org/mirrorz-302#site-configuration>，托管在 <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites>。仓库列表、仓库路径、状态和同步新鲜度由 mirrorz-monitor 写入 InfluxDB，不在该静态配置中重复维护。
 
-在加入 mirrorz.d.json 后，用户能够使用 mirrorz 提供的重定向功能，在替换配置时可以只使用 mirrorz 的域名。
+在加入 302 跳转配置后，用户能够使用 mirrorz 提供的重定向功能，在替换软件源配置时只使用 mirrorz 的域名。
 
 目前 <https://mirrors.cernet.edu.cn> 运行此服务，允许重定向到教育网镜像站。
 
-提供这个文件表明镜像站点知悉可能会有来自 mirrorz 的流量被重定向到它们。
+加入该配置表明镜像站点知悉可能会有来自 mirrorz 的流量被重定向到它们。
 
-#### 提供 mirrorz.d 信息
+#### 提供 302 站点信息
 
-新添加的镜像站点需要在 [mirrorz-config/d-extension/custom/static/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/custom/static) 中添加静态的、包含 mirrorz.d 信息的 JSON 文件。并在 [mirrorz-config/d-extension/custom/index.js](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/custom/index.js) 添加对应的内容。
+新添加的镜像站点需要在 [mirrorz-config/d-extension/sites/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites) 中添加一个包含 `abbrs` 和 `endpoints` 的静态 JSON 文件。`abbrs` 中的值必须与 mirrorz-monitor 写入的 `mirror` 标识完全一致；多个监控站点标识可以共用同一组 endpoints。
 
-最后修改 [mirrorz-config](https://github.com/mirrorz-org/mirrorz-config/)。在 `d_parsers` 字段中添加解析器。
+镜像站点还必须按照上文说明加入 mirrorz-monitor。302 服务会将监控数据中的仓库路径与这里配置的 endpoint 组合成最终跳转地址，不需要运行额外的生成脚本，也不需要维护 `d_parser`。
 
 全部完成之后，可以访问 <https://mirrors.cernet.edu.cn/api/scoring> 确认自己的站点在其中。
 

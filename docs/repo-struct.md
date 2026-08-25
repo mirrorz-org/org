@@ -12,11 +12,12 @@ This document introduces the repositories used by the MirrorZ project and their 
     - i18n
   - legacy
 - mirrorz-302 (redirect service)
-  - * Configuration needs to fill in the path of the dist directory in the mirrorz-d-extension repository
+  - * Loads site and endpoint configuration from mirrorz-config/d-extension/sites
+  - * Gets repository paths, status, and freshness from InfluxDB data written by mirrorz-monitor
 - mirrorz-help (help site)
   - Requires /static/json/legacy-pack.json --> mirrorz scripts/legacy-pack.js --> mirrorz-json-legacy
 - mirrorz-json-legacy (JSON files built for non-modern browsers and mirrorz-help)
 - mirrorz-monitor (updates the influxdb database)
   - config                                 --> mirrorz-config
-- mirrorz-config (configuration for mirrorz sites, including config, parser, json-site 和 d-extension)
+- mirrorz-config (configuration for mirrorz sites, including config, parser, and d-extension)
 ```
