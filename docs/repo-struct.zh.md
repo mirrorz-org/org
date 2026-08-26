@@ -14,7 +14,7 @@
   - * 从 mirrorz-config/d-extension/sites 加载站点与 endpoint 配置
   - * 从 mirrorz-monitor 写入的 InfluxDB 数据获取仓库路径、状态和同步新鲜度
 - mirrorz-help（帮助站点）
-  - 加载 /static/json/legacy/*.json --> static/json/legacy --> mirrorz-json-legacy
+  - Requires /static/json/legacy-pack.json --> mirrorz scripts/legacy-pack.js --> mirrorz-json-legacy
 - mirrorz-json-legacy（用于 mirrorz-help 构建的 JSON 文件）
 - mirrorz-monitor（更新 influxdb 数据库）
   - config                                 --> mirrorz-config
