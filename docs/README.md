@@ -10,7 +10,6 @@ MirrorZ consists of the following services:
 
 * <https://mirrorz.org/>: frontend with dynamic, real-time content
     * <https://mirrors.cernet.edu.cn>: MirrorZ hosted by CERNET, with CERNET mirrors only
-* <https://mirrorz.org/_/>: frontend with static, not-so-real-time content
 * mirrorz-302: backend for redirecting user requests to their "optimal" mirror site
 * mirrorz-monitor: used by the above two services, also for users to check the status of mirror sites
 
@@ -30,8 +29,8 @@ One mirror site has two ways of providing mirrorz.json
 
 Namely the mirror site exposes one single url for MirrorZ to use.
 
-* To enable dynamic frontend, add the url in [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* To enable static frontend, add the url in [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config)
+* To enable the frontend to fetch data directly from your server, add the url in [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
+* To enable the frontend to use statically generated JSON of your urls instead (no CORS required), add the url in [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config)
 * To enable monitor, add the url in [mirrorz-config/config/mirrorz.org.json:monitor_mirrors](https://github.com/mirrorz-org/mirrorz-config)
 
 #### Provide a `parser` to MirrorZ
@@ -40,8 +39,8 @@ A [mirrorz-config/parser](https://github.com/mirrorz-org/mirrorz-config/tree/mas
 
 Once a parser is provided in `mirrorz-config/parser`:
 
-* To enable dynamic frontend, add the parser in [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035) on the data the mirror site provides
-* To enable static frontend, add the parser in [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config). MirrorZ would periodically generate a mirrorz.json.
+* To enable the frontend to fetch data directly, add the parser in [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035) on the data the mirror site provides
+* To enable the frontend to use statically generated JSON of your data instead (no CORS required), add the parser in [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config). MirrorZ would periodically generate a mirrorz.json.
 * To enable monitor, add the parser in [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config)
 
 ### 302 Redirect Configuration

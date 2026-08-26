@@ -10,7 +10,6 @@ MirrorZ 包含以下服务：
 
 * <https://mirrorz.org/>：动态实时内容的前端
     * <https://mirrors.cernet.edu.cn>：校园网镜像站版 MirrorZ，仅包含教育网镜像
-* <https://mirrorz.org/_/>：静态、非实时内容的前端
 * mirrorz-302：用于将用户请求重定向到他们的「最佳」镜像站点的后端
 * mirrorz-monitor：被上述两个服务使用，同时供用户检查镜像站点的状态
 
@@ -30,8 +29,8 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 
 即镜像站点公开一个单一的 url 供 MirrorZ 使用。
 
-* 要启用动态前端，在 [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url，并为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* 要启用静态前端，在 [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url
+* 要启用前端直接从服务器获取数据，在 [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url，并为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
+* 要启用前端使用静态生成的 JSON（无需 CORS），在 [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url
 * 要启用监控，在 [mirrorz-config/config/mirrorz.org.json:monitor_mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url
 
 #### 提供一个 `parser` 给 MirrorZ
@@ -40,8 +39,8 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 
 一旦在 `mirrorz-config/parser` 中提供了一个 parser：
 
-* 要启用动态前端，在 [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser，并在镜像站点提供的数据上为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* 要启用静态前端，在 [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser。MirrorZ 会定期生成一个 mirrorz.json。
+* 要启用前端直接获取数据，在 [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser，并在镜像站点提供的数据上为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
+* 要启用前端使用静态生成的 JSON（无需 CORS），在 [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser。MirrorZ 会定期生成一个 mirrorz.json。
 * 要启用监控，在 [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser
 
 ### 302 跳转配置
