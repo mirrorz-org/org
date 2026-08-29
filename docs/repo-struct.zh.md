@@ -11,12 +11,12 @@
     - config                               --> mirrorz-config
     - i18n
 - mirrorz-302（跳转服务）
-  - * 从 mirrorz-config/d-extension/sites 加载站点与 endpoint 配置
+  - * 从 mirrorz-config/sites/*/config.json 加载站点与 endpoint 配置
   - * 从 mirrorz-monitor 写入的 InfluxDB 数据获取仓库路径、状态和同步新鲜度
 - mirrorz-help（帮助站点）
   - Requires /static/json/legacy-pack.json --> mirrorz scripts/legacy-pack.js --> mirrorz-json-legacy
 - mirrorz-json-legacy（用于 mirrorz-help 构建的 JSON 文件）
 - mirrorz-monitor（更新 influxdb 数据库）
   - config                                 --> mirrorz-config
-- mirrorz-config（mirrorz 站点配置，包含 config、parser 和 d-extension）
+- mirrorz-config（共享的前端、parser 与跳转配置，存放在 config 和 sites 中）
 ```

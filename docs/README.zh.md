@@ -23,29 +23,20 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 
 格式定义在 <https://github.com/mirrorz-org/mirrorz#data-format-v17>。每个镜像站点都应该提供这个数据，以便前端、oh-my-mirrorz 和监控器能够使用。
 
-一个镜像站点有两种提供 mirrorz.json 的方式：
+每个镜像站点在
+[mirrorz-config/sites](https://github.com/mirrorz-org/mirrorz-config/tree/master/sites)
+下拥有一个目录。目录中包含获取或转换该站点数据的 JavaScript，以及 parser
+需要的静态元数据。已经提供 mirrorz.json 的站点可以使用一个获取并返回该 JSON
+的小型 JavaScript 模块。
 
-#### 在镜像站服务器上提供 mirrorz.json
-
-即镜像站点公开一个单一的 url 供 MirrorZ 使用。
-
-* 要启用前端直接从服务器获取数据，在 [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url，并为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* 要启用前端使用静态生成的 JSON（无需 CORS），在 [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url
-* 要启用监控，在 [mirrorz-config/config/mirrorz.org.json:monitor_mirrors](https://github.com/mirrorz-org/mirrorz-config) 中添加 url
-
-#### 提供一个 `parser` 给 MirrorZ
-
-[mirrorz-config/parser](https://github.com/mirrorz-org/mirrorz-config/tree/master/parser) 转换他们的数据（例如 tunasync.json）为 mirrorz.json。
-
-一旦在 `mirrorz-config/parser` 中提供了一个 parser：
-
-* 要启用前端直接获取数据，在 [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser，并在镜像站点提供的数据上为 mirrorz.org [启用 CORS](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* 要启用前端使用静态生成的 JSON（无需 CORS），在 [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser。MirrorZ 会定期生成一个 mirrorz.json。
-* 要启用监控，在 [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config) 中添加 parser
+在 `parser/parsers.js` 中导出 parser，然后将其名称加入
+`mirrorz-config/config` 下相应配置文件的 `mirrors` 数组。前端、
+mirrorz-monitor 和 mirrorz-json-legacy 共用这一份列表。如果浏览器需要直接从镜像站
+获取数据，数据源必须[允许 mirrorz.org 跨域访问](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)。
 
 ### 302 跳转配置
 
-跳转服务的站点与 endpoint 配置定义在 <https://github.com/mirrorz-org/mirrorz-302#site-configuration>，托管在 <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites>。仓库列表、仓库路径、状态和同步新鲜度由 mirrorz-monitor 写入 InfluxDB，不在该静态配置中重复维护。
+跳转服务的站点与 endpoint 配置定义在 <https://github.com/mirrorz-org/mirrorz-302#site-configuration>，以 `config.json` 的形式存放在 <https://github.com/mirrorz-org/mirrorz-config/tree/master/sites> 下的各站点目录中。仓库列表、仓库路径、状态和同步新鲜度由 mirrorz-monitor 写入 InfluxDB，不在该静态配置中重复维护。
 
 在加入 302 跳转配置后，用户能够使用 mirrorz 提供的重定向功能，在替换软件源配置时只使用 mirrorz 的域名。
 
@@ -55,7 +46,7 @@ MirrorZ 项目存在多项服务，一个镜像站点可以通过有选择地提
 
 #### 提供 302 站点信息
 
-新添加的镜像站点需要在 [mirrorz-config/d-extension/sites/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites) 中添加一个包含 `abbrs` 和 `endpoints` 的静态 JSON 文件。`abbrs` 中的值必须与 mirrorz-monitor 写入的 `mirror` 标识完全一致；多个监控站点标识可以共用同一组 endpoints。
+新添加的镜像站点需要创建包含 `abbrs` 和 `endpoints` 的 `sites/<site>/config.json`。`abbrs` 中的值必须与 mirrorz-monitor 写入的 `mirror` 标识完全一致；多个监控站点标识可以共用同一组 endpoints。
 
 镜像站点还必须按照上文说明加入 mirrorz-monitor。302 服务会将监控数据中的仓库路径与这里配置的 endpoint 组合成最终跳转地址，不需要运行额外的生成脚本，也不需要维护 `d_parser`。
 

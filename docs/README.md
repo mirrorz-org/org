@@ -23,29 +23,21 @@ As there are multiple services, one mirror site can choose which services to par
 
 The format is defined at <https://github.com/mirrorz-org/mirrorz#data-format-v17>. For each mirror site, they should provide this data for the frontends, oh-my-mirrorz and monitor to work.
 
-One mirror site has two ways of providing mirrorz.json
+Each mirror site has a directory under
+[mirrorz-config/sites](https://github.com/mirrorz-org/mirrorz-config/tree/master/sites).
+The directory contains the JavaScript used to fetch or transform the site's
+data and the static metadata needed by that parser. A site that already serves
+mirrorz.json can use a small JavaScript module that fetches and returns it.
 
-#### Provide mirrorz.json on their server
-
-Namely the mirror site exposes one single url for MirrorZ to use.
-
-* To enable the frontend to fetch data directly from your server, add the url in [mirrorz-config/config/mirrorz.org.json:upstream_mirrors](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035)
-* To enable the frontend to use statically generated JSON of your urls instead (no CORS required), add the url in [mirrorz-config/config/mirrorz.org.json:mirrors](https://github.com/mirrorz-org/mirrorz-config)
-* To enable monitor, add the url in [mirrorz-config/config/mirrorz.org.json:monitor_mirrors](https://github.com/mirrorz-org/mirrorz-config)
-
-#### Provide a `parser` to MirrorZ
-
-A [mirrorz-config/parser](https://github.com/mirrorz-org/mirrorz-config/tree/master/parser) transforms their data (e.g. tunasync.json) to mirrorz.json.
-
-Once a parser is provided in `mirrorz-config/parser`:
-
-* To enable the frontend to fetch data directly, add the parser in [mirrorz-config/config/mirrorz.org.json:upstream_parser](https://github.com/mirrorz-org/mirrorz-config) and [enable CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035) on the data the mirror site provides
-* To enable the frontend to use statically generated JSON of your data instead (no CORS required), add the parser in [mirrorz-config/config/mirrorz.org.json:mirrors_legacy](https://github.com/mirrorz-org/mirrorz-config). MirrorZ would periodically generate a mirrorz.json.
-* To enable monitor, add the parser in [mirrorz-config/config/mirrorz.org.json:monitor_parser](https://github.com/mirrorz-org/mirrorz-config)
+Export the parser from `parser/parsers.js`, then add its name to the `mirrors`
+array in the applicable file under `mirrorz-config/config`. This single list is
+used by the frontend, mirrorz-monitor, and mirrorz-json-legacy. If the browser
+fetches data from the mirror site, the source must
+[allow CORS for mirrorz.org](https://github.com/mirrorz-org/mirrorz/pull/60#issuecomment-884801035).
 
 ### 302 Redirect Configuration
 
-The site and endpoint configuration for the redirect service is defined at <https://github.com/mirrorz-org/mirrorz-302#site-configuration> and hosted at <https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites>. Repository lists, paths, status, and freshness are written to InfluxDB by mirrorz-monitor and are not duplicated in this static configuration.
+The site and endpoint configuration for the redirect service is defined at <https://github.com/mirrorz-org/mirrorz-302#site-configuration> and stored as `config.json` in each directory under <https://github.com/mirrorz-org/mirrorz-config/tree/master/sites>. Repository lists, paths, status, and freshness are written to InfluxDB by mirrorz-monitor and are not duplicated in this static configuration.
 
 This enables the user to use redirection provided by mirrorz. Namely when they are substituting sources, they can just use the domain name of mirrorz.
 
@@ -55,7 +47,7 @@ Joining this configuration indicates that the mirror site is aware of potential 
 
 #### Providing 302 Site Information
 
-Mirror sites shall add a static JSON file containing `abbrs` and `endpoints` in [mirrorz-config/d-extension/sites/](https://github.com/mirrorz-org/mirrorz-config/tree/master/d-extension/sites). Every value in `abbrs` must exactly match the `mirror` identifier written by mirrorz-monitor; multiple monitored site identifiers may share one endpoint configuration.
+Mirror sites shall add `sites/<site>/config.json` containing `abbrs` and `endpoints`. Every value in `abbrs` must exactly match the `mirror` identifier written by mirrorz-monitor; multiple monitored site identifiers may share one endpoint configuration.
 
 The mirror site must also be added to mirrorz-monitor as described above. The 302 service combines repository paths from monitor data with the configured endpoints, so no separate generation script or `d_parser` entry is needed.
 
